@@ -74,7 +74,7 @@ class TextToSpeech:
 
 
 if __name__ == "__main__":
-    audio_file = "testing.wav"
+    audio_file = "assets/audio/testing.wav"
 
     # convert audio to text
     audio_to_text = AudioToText(audio_file)
