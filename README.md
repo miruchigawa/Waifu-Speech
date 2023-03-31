@@ -25,5 +25,12 @@ python main.py
 ```
 (I'm using the first method because im using python 3.xx)
 
+### Troubleshooting
+- Linux
+
+If there are problems when converting audio, try installing flac 
+
+Activate debug mode if the error persists to view the error log. Don't forget to send the error log to the issue to be fixed
+
 ### License
 [see: LICENSE](/LICENSE)

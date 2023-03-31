@@ -4,9 +4,10 @@ import speech_recognition as sr
 
 
 class AudioToText:
-    def __init__(self, audio_file):
+    def __init__(self, audio_file, debug):
         self.audio_file = audio_file
         self.recognizer = sr.Recognizer()
+        self.debug = debug
 
     def convert(self):
         try:
@@ -15,7 +16,9 @@ class AudioToText:
             text = self.recognizer.recognize_google(audio_data, language='id-ID')
             print(f"[Success] You say: {text}")
             return text
-        except:
+        except Exception as e:
+            if self.debug == "y":
+              print(e)
             return None
             
 class MicToText:
@@ -75,22 +78,25 @@ class TextToSpeech:
 
 if __name__ == "__main__":
     audio_file = "assets/audio/testing.wav"
-
-    # convert audio to text
-    audio_to_text = AudioToText(audio_file)
-    text = audio_to_text.convert()
-    if not text:
-        print("[Failed] Failed to convert audio file to text")
-        exit()
+    section = int(input("Select audio source \n1. Audio\n2. Mic: "))
+    debug = input("Enable debug mode? y/n: ")
     
-    # Uncomment this if you want to use your microphone as sound source
-    # You need PyAudio first install it use pip install PyAudio
-    # convert microphone to text
-    #audio_to_text = AudioToText(audio_file)
-    #text = audio_to_text.convert()
-    #if not text:
-    #    print("[Failed] Failed to convert audio file to text")
-    #    exit()
+    if section == 1:
+      # convert audio to text
+      audio_to_text = AudioToText(audio_file, debug)
+      text = audio_to_text.convert()
+      if not text:
+          print("[Failed] Failed to convert audio file to text")
+          exit()
+    elif section == 2:
+      # convert microphone to text
+      audio_to_text = MicToText()
+      text = audio_to_text.convert()
+      if not text:
+          print("[Failed] Failed to convert audio file to text")
+          exit()
+    else:
+      print("Invalid key.")
 
     # translate text to Japanese
     text_translator = TextTranslator(text)
