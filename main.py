@@ -1,4 +1,6 @@
-import translators.server as tss
+#!/usr/bin/python3
+#import translators.server as tss
+import subprocess
 import requests
 import speech_recognition as sr
 
@@ -37,18 +39,18 @@ class MicToText:
             return None
 
 
-class TextTranslator:
-    def __init__(self, text):
-        self.text = text
-
-    def translate(self, source, target):
-        try:
-            translated_text = tss.google(self.text, source, target)
-            print(f"[Success] Translated: {translated_text}")
-            return translated_text
-        except:
-            return None
-
+#class TextTranslator:
+#    def __init__(self, text):
+#        self.text = text
+#
+#    def translate(self, source, target):
+#        try:
+#            translated_text = tss.google(self.text, source, target)
+#            print(f"[Success] Translated: {translated_text}")
+#            return translated_text
+#        except:
+#            return None
+#
 
 class TextToSpeech:
     def __init__(self, text):
@@ -78,7 +80,7 @@ class TextToSpeech:
 
 if __name__ == "__main__":
     audio_file = "assets/audio/testing.wav"
-    section = int(input("Select audio source \n1. Audio\n2. Mic: "))
+    section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
     debug = input("Enable debug mode? y/n: ")
     
     if section == 1:
@@ -95,15 +97,23 @@ if __name__ == "__main__":
       if not text:
           print("[Failed] Failed to convert audio file to text")
           exit()
+    elif section == 3:
+      # read text file
+      f=open("text","rt")
+      text = f.read()
+      f.close()
     else:
       print("Invalid key.")
 
-    # translate text to Japanese
-    text_translator = TextTranslator(text)
-    translated_text = text_translator.translate("id", "ja")
-    if not translated_text:
-        print("[Failed] Failed to translate text")
-        exit()
+    if section==1 or section ==2:
+        # translate text to Japanese
+        text_translator = TextTranslator(text)
+        translated_text = text_translator.translate("id", "ja")
+        if not translated_text:
+            print("[Failed] Failed to translate text")
+            exit()
+    elif section==3:
+        translated_text = text
 
     # generate audio file
     text_to_speech = TextToSpeech(translated_text)
@@ -118,3 +128,6 @@ if __name__ == "__main__":
         print(f"[Success] Audio file saved as {file_name}")
     else:
         print("[Failed] Audio file not saved")
+    print(translated_text)
+    subprocess.run(["mpv","test.mp3"])
+
