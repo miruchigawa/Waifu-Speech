@@ -99,7 +99,7 @@ if __name__ == "__main__":
           exit()
     elif section == 3:
       # read text file
-      f=open("text","rt")
+      f=open("text","r")
       text = f.read()
       f.close()
     else:
