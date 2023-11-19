@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#import translators.server as tss
+import translators.server as tss
 import subprocess
 import requests
 import speech_recognition as sr
@@ -39,17 +39,17 @@ class MicToText:
             return None
 
 
-#class TextTranslator:
-#    def __init__(self, text):
-#        self.text = text
-#
-#    def translate(self, source, target):
-#        try:
-#            translated_text = tss.google(self.text, source, target)
-#            print(f"[Success] Translated: {translated_text}")
-#            return translated_text
-#        except:
-#            return None
+class TextTranslator:
+    def __init__(self, text):
+        self.text = text
+
+    def translate(self, source, target):
+        try:
+            translated_text = tss.google(self.text, source, target)
+            print(f"[Success] Translated: {translated_text}")
+            return translated_text
+        except:
+            return None
 #
 
 class TextToSpeech:
