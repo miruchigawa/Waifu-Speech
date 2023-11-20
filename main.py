@@ -131,5 +131,6 @@ if text_to_speech.save_audio(audio_url, file_name):
     print(f"[Success] Audio file saved as {file_name}")
     subprocess.run(["mpv","test.mp3"])
 else:
-    print("[Failed] Audio file not saved")
+    print("[Failed] audio url cannot find.")
+    print("[Failed] Audio file not saved.")
 exit()
