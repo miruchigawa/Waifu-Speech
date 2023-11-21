@@ -3,6 +3,7 @@
 import subprocess
 import requests
 import speech_recognition as sr
+import sys
 
 
 class AudioToText:
@@ -79,9 +80,15 @@ class TextToSpeech:
 
 
 audio_file = "assets/audio/testing.wav"
-section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
-debug = input("Enable debug mode? y/n: ")
-fn = input("File name to read: ")
+#section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
+#debug = input("Enable debug mode? y/n: ")
+#fn = input("File name to read: ")
+debug='n'
+section =3
+if len(sys.argv)!=2:
+    print("[Failed] give a parameter as a file name to read")
+    exit()
+fn=sys.argv[1]
 
 if section == 1:
   # convert audio to text
@@ -126,10 +133,10 @@ if not audio_url:
     exit()
 
 # save audio file
-file_name = "test.mp3"
+file_name = fn+".mp3"
 if text_to_speech.save_audio(audio_url, file_name):
     print(f"[Success] Audio file saved as {file_name}")
-    subprocess.run(["mpv","test.mp3"])
+    subprocess.run(["mpv",file_name])
 else:
     print("[Failed] audio url cannot find.")
     print("[Failed] Audio file not saved.")
