@@ -2,8 +2,6 @@
 #import translators.server as tss
 import requests
 import speech_recognition as sr
-import sys
-
 
 class AudioToText:
     def __init__(self, audio_file, debug):
