@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+
+# uncomment following line if you use google translators
 #import translators.server as tss
 import requests
 import speech_recognition as sr
