@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 #import translators.server as tss
-import subprocess
 import requests
 import speech_recognition as sr
 import sys
@@ -136,7 +135,6 @@ if not audio_url:
 file_name = fn+".mp3"
 if text_to_speech.save_audio(audio_url, file_name):
     print(f"[Success] Audio file saved as {file_name}")
-    subprocess.run(["mpv",file_name])
 else:
     print("[Failed] audio url cannot find.")
     print("[Failed] Audio file not saved.")
