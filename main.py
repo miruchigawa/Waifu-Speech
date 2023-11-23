@@ -62,6 +62,11 @@ class TextToSpeech:
             response = requests.get(url).json()
             if response["success"] == True:
                 audio_url = response["mp3DownloadUrl"]
+                while True:
+                    status_url=response["audioStatusUrl"]
+                    response2 = requests.get(status_url).json()
+                    if response2["isAudioReady"]==True:
+                        break
                 return audio_url
             else:
                 return None
@@ -76,6 +81,7 @@ class TextToSpeech:
         file.write(audio_content)
         file.close()
         return True
+
 
 
 audio_file = "assets/audio/testing.wav"
