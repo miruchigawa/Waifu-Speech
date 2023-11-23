@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 # uncomment following line if you use google translators
 #import translators.server as tss
 import requests
@@ -83,13 +81,9 @@ class TextToSpeech:
 audio_file = "assets/audio/testing.wav"
 #section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
 #debug = input("Enable debug mode? y/n: ")
-#fn = input("File name to read: ")
+fn = input("File name to read: ")
 debug='n'
 section =3
-if len(sys.argv)!=2:
-    print("[Failed] give a parameter as a file name to read")
-    exit()
-fn=sys.argv[1]
 
 if section == 1:
   # convert audio to text
