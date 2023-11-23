@@ -3,7 +3,6 @@
 import requests
 import speech_recognition as sr
 
-
 class AudioToText:
     def __init__(self, audio_file, debug):
         self.audio_file = audio_file
@@ -74,7 +73,7 @@ class TextToSpeech:
 
     def save_audio(self, audio_url, file_name):
         audio_content = requests.get(audio_url).content
-        if not audio_content:https://github.com/fygar256/Waifu-Speech
+        if not audio_content:
             return False
         file=open(file_name, "wb")
         file.write(audio_content)
@@ -82,59 +81,61 @@ class TextToSpeech:
         return True
 
 
+if __name__ == "__main__":
 
-audio_file = "assets/audio/testing.wav"
-section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File\n4. Text File(Japanese)\n: "))
-debug = input("Enable debug mode? y/n: ")
-
-if section == 1:
-  # convert audio to text
-  audio_to_text = AudioToText(audio_file, debug)
-  text = audio_to_text.convert()
-  if not text:
-      print("[Failed] Failed to convert audio file to text")
+    audio_file = "assets/audio/testing.wav"
+    section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File\n4. Text File(Japanese)\n: "))
+    debug = input("Enable debug mode? y/n: ")
+    
+    if section == 1:
+      # convert audio to text
+      audio_to_text = AudioToText(audio_file, debug)
+      text = audio_to_text.convert()
+      if not text:
+          print("[Failed] Failed to convert audio file to text")
+          exit()
+    elif section == 2:
+      # convert microphone to text
+      audio_to_text = MicToText()
+      text = audio_to_text.convert()
+      if not text:
+          print("[Failed] Failed to convert audio file to text")
+          exit()
+    elif section == 3 or section==4:
+      # read text file
+      fn = input("File name to read: ")
+      f=open(fn,"r")
+      text = f.read()
+      f.close()
+    else:
+      print("Invalid key.")
       exit()
-elif section == 2:
-  # convert microphone to text
-  audio_to_text = MicToText()
-  text = audio_to_text.convert()
-  if not text:
-      print("[Failed] Failed to convert audio file to text")
-      exit()
-elif section == 3 or section==4:
-  # read text file
-  fn = input("File name to read: ")
-  f=open(fn,"r")
-  text = f.read()
-  f.close()
-else:
-  print("Invalid key.")
-  exit()
-
-if section==1 or section ==2 or section==3:
-    # translate text to Japanese
-    text_translator = TextTranslator(text)
-    translated_text = text_translator.translate("id", "ja")
-    if not translated_text:
-        print("[Failed] Failed to translate text")
+    
+    if section==1 or section ==2 or section==3:
+        # translate text to Japanese
+        text_translator = TextTranslator(text)
+        translated_text = text_translator.translate("id", "ja")
+        if not translated_text:
+            print("[Failed] Failed to translate text")
+            exit()
+    elif section==4:
+        translated_text = text
+    
+    print(translated_text)
+    
+    # generate audio file
+    text_to_speech = TextToSpeech(translated_text)
+    audio_url = text_to_speech.generate_audio()
+    if not audio_url:
+        print("[Failed] Failed to generate audio")
         exit()
-elif section==4:
-    translated_text = text
-
-print(translated_text)
-
-# generate audio file
-text_to_speech = TextToSpeech(translated_text)
-audio_url = text_to_speech.generate_audio()
-if not audio_url:
-    print("[Failed] Failed to generate audio")
+    
+    # save audio file
+    file_name = fn+".mp3"
+    if text_to_speech.save_audio(audio_url, file_name):
+        print(f"[Success] Audio file saved as {file_name}")
+    else:
+        print("[Failed] audio url cannot find.")
+        print("[Failed] Audio file not saved.")
     exit()
-
-# save audio file
-file_name = fn+".mp3"
-if text_to_speech.save_audio(audio_url, file_name):
-    print(f"[Success] Audio file saved as {file_name}")
-else:
-    print("[Failed] audio url cannot find.")
-    print("[Failed] Audio file not saved.")
-exit()
+    
