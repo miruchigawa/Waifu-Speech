@@ -74,7 +74,7 @@ class TextToSpeech:
 
     def save_audio(self, audio_url, file_name):
         audio_content = requests.get(audio_url).content
-        if len(str(audio_content))<100 and str(audio_content).find("false"):
+        if not audio_content:https://github.com/fygar256/Waifu-Speech
             return False
         file=open(file_name, "wb")
         file.write(audio_content)
