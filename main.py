@@ -79,8 +79,8 @@ class TextToSpeech:
 
 
 audio_file = "assets/audio/testing.wav"
-#section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
-#debug = input("Enable debug mode? y/n: ")
+section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
+debug = input("Enable debug mode? y/n: ")
 fn = input("File name to read: ")
 debug='n'
 section =3
