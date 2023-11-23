@@ -3,6 +3,7 @@
 import requests
 import speech_recognition as sr
 
+
 class AudioToText:
     def __init__(self, audio_file, debug):
         self.audio_file = audio_file
@@ -83,7 +84,7 @@ class TextToSpeech:
 
 
 audio_file = "assets/audio/testing.wav"
-section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
+section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File\n4. Text File(Japanese)\n: "))
 debug = input("Enable debug mode? y/n: ")
 
 if section == 1:
@@ -100,7 +101,7 @@ elif section == 2:
   if not text:
       print("[Failed] Failed to convert audio file to text")
       exit()
-elif section == 3:
+elif section == 3 or section==4:
   # read text file
   fn = input("File name to read: ")
   f=open(fn,"r")
@@ -110,14 +111,14 @@ else:
   print("Invalid key.")
   exit()
 
-if section==1 or section ==2:
+if section==1 or section ==2 or section==3:
     # translate text to Japanese
     text_translator = TextTranslator(text)
     translated_text = text_translator.translate("id", "ja")
     if not translated_text:
         print("[Failed] Failed to translate text")
         exit()
-elif section==3:
+elif section==4:
     translated_text = text
 
 print(translated_text)
