@@ -81,9 +81,6 @@ class TextToSpeech:
 audio_file = "assets/audio/testing.wav"
 section = int(input("Select source \n1. Audio\n2. Mic\n3. Text File(Japanese)\n: "))
 debug = input("Enable debug mode? y/n: ")
-fn = input("File name to read: ")
-debug='n'
-section =3
 
 if section == 1:
   # convert audio to text
@@ -101,6 +98,7 @@ elif section == 2:
       exit()
 elif section == 3:
   # read text file
+  fn = input("File name to read: ")
   f=open(fn,"r")
   text = f.read()
   f.close()
