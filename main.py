@@ -2,6 +2,8 @@
 #import translators.server as tss
 import requests
 import speech_recognition as sr
+import sys
+
 
 class AudioToText:
     def __init__(self, audio_file, debug):
@@ -60,10 +62,10 @@ class TextToSpeech:
             response = requests.get(url).json()
             if response["success"] == True:
                 audio_url = response["mp3DownloadUrl"]
+                status_url= response["audioStatusUrl"]
                 while True:
-                    status_url=response["audioStatusUrl"]
                     response2 = requests.get(status_url).json()
-                    if response2["isAudioReady"]==True:
+                    if response2["isAudioReady"] == True:
                         break
                 return audio_url
             else:
