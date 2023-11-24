@@ -137,7 +137,6 @@ if __name__ == "__main__":
     if text_to_speech.save_audio(audio_url, file_name):
         print(f"[Success] Audio file saved as {file_name}")
     else:
-        print("[Failed] audio url cannot find.")
         print("[Failed] Audio file not saved.")
     exit()
     
